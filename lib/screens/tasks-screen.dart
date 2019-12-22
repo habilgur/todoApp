@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:todo/models/task.dart';
+import 'package:provider/provider.dart';
+import 'package:todo/models/task-data.dart';
 import 'package:todo/screens/add-task-screen.dart';
 import 'package:todo/widgets/task_list.dart';
 
@@ -9,14 +10,6 @@ class TasksScreen extends StatefulWidget {
 }
 
 class _TasksScreenState extends State<TasksScreen> {
-  List<Task> tasks;
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    tasks = [];
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,7 +42,8 @@ class _TasksScreenState extends State<TasksScreen> {
                       fontWeight: FontWeight.bold),
                 ),
                 Text(
-                    "You Have ${tasks.where((i) => i.isDone == false).length} Tasks",
+                    "You Have ${Provider.of<TaskData>(context).remainingTasks} Tasks",
+                    //"You Have ${tasks.where((i) => i.isDone == false).length} Tasks",
                     style: TextStyle(fontSize: 23, color: Colors.white)),
               ],
             ),
@@ -57,7 +51,7 @@ class _TasksScreenState extends State<TasksScreen> {
           Expanded(
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 15),
-              child: TaskList(tasks: tasks),
+              child: TaskList(),
               margin: EdgeInsets.only(top: 20),
               decoration: BoxDecoration(
                   color: Colors.white,
@@ -79,18 +73,7 @@ class _TasksScreenState extends State<TasksScreen> {
               backgroundColor: Colors.transparent,
               context: context,
               builder: (context) {
-                return AddTaskScreen(
-                  createTaskCallBack: (userTask) {
-                    if (userTask != null) {
-                      var newTask = Task(title: userTask);
-                      setState(() {
-                        tasks.add(newTask);
-                      });
-                      Navigator.pop(context);
-                      print("addButton" + newTask.title);
-                    }
-                  },
-                );
+                return AddTaskScreen();
               });
         },
       ),

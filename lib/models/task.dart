@@ -1,9 +1,9 @@
-class Task {
+import 'package:flutter/cupertino.dart';
+
+class Task extends ChangeNotifier {
   String title;
   bool isDone;
-  Task({this.title, this.isDone = false});
+  List<Task> tasks = [];
 
-  void toggle() {
-    isDone = !isDone;
-  }
+  Task({this.title, this.isDone = false});
 }

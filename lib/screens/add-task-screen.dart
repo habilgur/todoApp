@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todo/models/task-data.dart';
 
 class AddTaskScreen extends StatelessWidget {
-  final Function createTaskCallBack;
-
-  AddTaskScreen({this.createTaskCallBack});
-
   @override
   Widget build(BuildContext context) {
     String userTask;
@@ -34,7 +32,8 @@ class AddTaskScreen extends StatelessWidget {
                 color: Colors.lightBlue,
                 child: Text("Add"),
                 onPressed: () {
-                  createTaskCallBack(userTask);
+                  Provider.of<TaskData>(context).addTask(userTask);
+                  Navigator.pop(context);
                 },
 
                 ///userTask bu function içinden ulaşılabilir.
